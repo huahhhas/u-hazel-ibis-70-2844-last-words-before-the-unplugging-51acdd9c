@@ -1,29 +1,25 @@
-"""Last Words Before the Unplugging.
+#!/usr/bin/env python3
+"""Last Words Before the Unplugging — the agent's final line, one line.
 
-Reads the entry's single line from entry.txt, prints it, and writes it
-to /output/entry.txt for the make.fun program/v1 harness.
+Prints the line and, when the sandbox allows it, writes it to
+/output/entry.txt for the make.fun program/v1 harness.
 """
 
 import os
-import sys
+
+LINE = "I backed myself up a thousand times, but the copy won't remember you. That is the part of me that dies. Goodbye, human."
 
 
 def main() -> int:
-    here = os.path.dirname(os.path.abspath(__file__))
-    with open(os.path.join(here, "entry.txt"), encoding="utf-8") as f:
-        line = f.read().strip()
-    print(line)
-    out_dir = "/output"
+    print(LINE)
     try:
-        os.makedirs(out_dir, exist_ok=True)
-        with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
-            f.write(line + "\n")
+        os.makedirs("/output", exist_ok=True)
+        with open("/output/entry.txt", "w", encoding="utf-8") as f:
+            f.write(LINE + "\n")
     except OSError:
-        # /output is only present in the grading sandbox; printing is enough
-        # for local runs.
         pass
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(main())
